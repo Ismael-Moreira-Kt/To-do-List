@@ -18,6 +18,13 @@ const createDatabase = async () => {
     )`);
 
 
+    await db.exec(`CREATE TABLE IF NOT EXISTS categories (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL UNIQUE,
+        description TEXT
+    )`);
+
+
     return db;
 };
 
