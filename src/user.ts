@@ -14,3 +14,10 @@ export const addUser = async (name: string, email: string): Promise<void> => {
     await db.run('INSERT INTO users (name, email) VALUES (?, ?)', name, email);
     console.log('User added successfully!');
 };
+
+
+export const listUsers = async (): Promise<User[]> => {
+    const db = await createDatabase();
+    const users: User[] = await db.all('SELECT * FROM users');
+    return users;
+};
