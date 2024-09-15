@@ -11,3 +11,15 @@ export type Task = {
     user_id?: number;
     category_id?: number;
 };
+
+
+export const addTask = async (description: string, dueDate?: string, priority: number = 3, userId?: number, categoryId?: number): Promise<void> => {
+    const db = await createDatabase();
+    
+    await db.run(
+        'INSERT INTO tasks (description, due_date, priority, user_id, category_id) VALUES (?, ?, ?, ?, ?)',
+        description, dueDate, priority, userId, categoryId
+    );
+    
+    console.log('Task added successfully!');
+};
