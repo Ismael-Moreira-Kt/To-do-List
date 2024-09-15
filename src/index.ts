@@ -5,6 +5,63 @@ import { addCategory, listCategories } from './category';
 
 
 
+const taskMenu = async () => {
+    console.log('--- Task Management ---');
+    console.log('1. Add Task');
+    console.log('2. List Tasks');
+    console.log('3. Complete Task');
+    console.log('4. Delete Task');
+    console.log('5. Back to Main Menu');
+  
+    const option = readlineSync.question('Choose an option: ');
+  
+    switch (option) {
+        case '1':
+            const description = readlineSync.question('Task description: ');
+            const dueDate = readlineSync.question('Due date (optional): ');
+            const priority = parseInt(readlineSync.question('Priority (1-5): '), 10);
+            
+            await addTask(description, dueDate, priority);
+            break;
+
+        case '2':
+            const tasks = await listTasks();
+
+            if (tasks.length === 0) {
+                console.log('No tasks found.');
+            } 
+            else {
+                tasks.forEach(task => {
+                    console.log(`${task.id}. [${task.completed ? 'X' : ' '}] ${task.description}`);
+                });
+            }
+            
+            break;
+
+        case '3':
+            const completeId = parseInt(readlineSync.question('Task ID to complete: '), 10);
+
+            await completeTask(completeId);
+            break;
+
+        case '4':
+            const deleteId = parseInt(readlineSync.question('Task ID to delete: '), 10);
+
+            await deleteTask(deleteId);
+            break;
+
+        case '5':
+            return;
+
+        default:
+            console.log('Invalid option');
+    }
+  
+    await taskMenu();
+};
+  
+
+
 const categoryMenu = async () => {
     console.log('--- Category Management ---');
     console.log('1. Add Category');
