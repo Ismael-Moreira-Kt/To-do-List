@@ -38,3 +38,10 @@ export const completeTask = async (id: number): Promise<void> => {
     await db.run('UPDATE tasks SET completed = 1 WHERE id = ?', id);
     console.log(`Task ${id} completed!`);
 };
+
+
+export const deleteTask = async (id: number): Promise<void> => {
+    const db = await createDatabase();
+    await db.run('DELETE FROM tasks WHERE id = ?', id);
+    console.log(`Task ${id} deleted!`);
+};
