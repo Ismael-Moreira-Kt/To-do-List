@@ -5,6 +5,47 @@ import { addCategory, listCategories } from './category';
 
 
 
+const categoryMenu = async () => {
+    console.log('--- Category Management ---');
+    console.log('1. Add Category');
+    console.log('2. List Categories');
+    console.log('3. Back to Main Menu');
+  
+    const option = readlineSync.question('Choose an option: ');
+  
+    switch (option) {
+        case '1':
+            const categoryName = readlineSync.question('Category name: ');
+            const description = readlineSync.question('Category description (optional): ');
+            
+            await addCategory(categoryName, description);
+            break;
+
+        case '2':
+            const categories = await listCategories();
+
+            if (categories.length === 0) {
+                console.log('No categories found.');
+            } 
+            else {
+                categories.forEach(category => {
+                    console.log(`${category.id}. ${category.name} - ${category.description || 'No description'}`);
+                });
+            }
+            
+            break;
+
+        case '3':
+            return;
+
+        default:
+            console.log('Invalid option');
+    }
+  
+    await categoryMenu();
+};
+
+
 const userMenu = async () => {
     console.log('--- User Management ---');
     console.log('1. Add User');
