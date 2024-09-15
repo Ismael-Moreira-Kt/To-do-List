@@ -14,3 +14,10 @@ export const addCategory = async (name: string, description?: string): Promise<v
     await db.run('INSERT INTO categories (name, description) VALUES (?, ?)', name, description);
     console.log('Category added successfully!');
 };
+
+
+export const listCategories = async (): Promise<Category[]> => {
+    const db = await createDatabase();
+    const categories: Category[] = await db.all('SELECT * FROM categories');
+    return categories;
+};
