@@ -23,3 +23,11 @@ export const addTask = async (description: string, dueDate?: string, priority: n
     
     console.log('Task added successfully!');
 };
+
+
+export const listTasks = async (): Promise<Task[]> => {
+    const db = await createDatabase();
+    const tasks: Task[] = await db.all('SELECT * FROM tasks');
+    
+    return tasks;
+};
