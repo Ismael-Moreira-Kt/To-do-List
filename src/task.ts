@@ -31,3 +31,10 @@ export const listTasks = async (): Promise<Task[]> => {
     
     return tasks;
 };
+
+
+export const completeTask = async (id: number): Promise<void> => {
+    const db = await createDatabase();
+    await db.run('UPDATE tasks SET completed = 1 WHERE id = ?', id);
+    console.log(`Task ${id} completed!`);
+};
